@@ -154,7 +154,7 @@ static int hifibunny3_codec_hw_params(struct snd_pcm_substream *substream, struc
 	snd_soc_component_write(component, ES9038Q2M_SOFT_START,0x8C);
 	snd_soc_component_write(component, ES9038Q2M_GENERAL_CONFIG_0,0x54);
 	snd_soc_component_write(component, ES9038Q2M_GENERAL_CONFIG_1,0x00);
-	snd_soc_component_write(component, ES9038Q2M_INPUT_CONFIG, 0xC0);
+	snd_soc_component_write(component, ES9038Q2M_INPUT_CONFIG, iface);
 	//Set NCO divier
 	switch(params_rate(params))
 	{
