@@ -40,7 +40,7 @@ static const struct reg_default hifibunny3_codec_reg_defaults[] = {
 	{ES9038Q2M_DEEMP_DOP,0x48},
 	{ES9038Q2M_GPIO_CONFIG,0xFF},
 	{ES9038Q2M_MASTER_MODE,0x80},
-	{ES9038Q2M_SOFT_START,0x0C},
+	{ES9038Q2M_SOFT_START,0x8C},
 	//Disable ASRC
 	{ES9038Q2M_GENERAL_CONFIG_0,0x54},
 	//Disable amp supply
@@ -101,8 +101,6 @@ static SOC_VALUE_ENUM_SINGLE_DECL(hifibunny3_fir_filter_type_enum,
 /* Control */
 static const struct snd_kcontrol_new hifibunny3_codec_controls[] = {
 SOC_DOUBLE_R_TLV("Master Playback Volume", ES9038Q2M_VOLUME1, ES9038Q2M_VOLUME2,
-		 0, 255, 1, volume_tlv),
-SOC_DOUBLE_R_TLV("Digital Playback Volume", ES9038Q2M_VOLUME1, ES9038Q2M_VOLUME2,
 		 0, 255, 1, volume_tlv),
 SOC_ENUM("DSP Program Route", hifibunny3_fir_filter_type_enum),
 SOC_SINGLE("DoP Playback Switch", ES9038Q2M_DEEMP_DOP, 3, 1, 0)
@@ -166,94 +164,94 @@ static int hifibunny3_codec_hw_params(struct snd_pcm_substream *substream, struc
 	switch(params_rate(params))
 	{
 		case 8000:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x2D);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x3E);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x05);
-			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
-			break;
-		case 11025:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0xB0);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x39);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x07);
-			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
-			break;
-		case 16000:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x5B);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x7C);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0xAB);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0xAA);
 			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x0A);
 			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
 			break;
-		case 22050:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x60);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x73);
+		case 11025:
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x33);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0xB3);
 			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x0E);
 			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
 			break;
+		case 16000:
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x55);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x55);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x15);
+			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
+			break;
+		case 22050:
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x66);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x66);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x1D);
+			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
+			break;
 		case 32000:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0xB6);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0xF8);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x14);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0xAB);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0xAA);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x2A);
 			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
 			break;
 		case 44100:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0xC1);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0xE6);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x1C);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0xCD);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0xCC);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x3A);
 			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
 			break;
 		case 48000:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x10);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x75);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x1F);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x40);
 			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
 			break;
 		case 88200:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x81);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0xCD);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x39);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x9A);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x99);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x75);
 			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
 			break;
 		case 96000:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x21);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0xEA);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x3E);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x80);
 			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
 			break;
 		case 176400:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x02);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x9B);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x73);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x33);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x33);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0xEB);
 			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
 			break;
 		case 192000:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x41);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0xD4);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x7D);
-			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x01);
 			break;
 		case 352800:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x05);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x36);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0xE7);
-			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x66);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x66);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0xD6);
+			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x01);
 			break;
 		case 384000:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x82);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0xA8);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0xFB);
-			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x02);
 			break;
 		case 705600:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x09);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x6C);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0xCE);
-			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x01);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0xCD);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0xCC);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0xAC);
+			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x03);
 			break;
 		case 768000:
-			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x05);
-			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x51);
-			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0xF7);
-			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x01);
+			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_1, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_2, 0x00);
+			snd_soc_component_write(component, ES9038Q2M_NCO_3, 0x04);
 			break;
 		default:
 			snd_soc_component_write(component, ES9038Q2M_NCO_0, 0x00);
@@ -387,29 +385,29 @@ static int es9038q2m_set_bias_level(struct snd_soc_component *component, enum sn
 		case SND_SOC_BIAS_OFF:
 			snd_soc_component_write(component, ES9038Q2M_AUTO_CAL,0x04); //Bias low, turn off opamp
 			snd_soc_component_write(component, ES9038Q2M_GPIO_INV, 0xC0);//GPIO low, turn off pwr
-			snd_soc_component_write(component, ES9038Q2M_SOFT_START, 0x0C); // ramp DAC output to gnd
+			// snd_soc_component_write(component, ES9038Q2M_SOFT_START, 0x0C); // ramp DAC output to gnd
 			printk("DAC bias level -> OFF!");
 			break;
 		case SND_SOC_BIAS_STANDBY:
 			snd_soc_component_write(component, ES9038Q2M_AUTO_CAL,0x04); //Bias low, turn off opamp
 			mdelay(50);
 			snd_soc_component_write(component, ES9038Q2M_GPIO_INV, 0x00);//GPIO high, turn on pwr
-			mdelay(50);
-			snd_soc_component_write(component, ES9038Q2M_SOFT_START, 0x8C); // ramp DAC output to 0.5*AVCC
+			// mdelay(50);
+			// snd_soc_component_write(component, ES9038Q2M_SOFT_START, 0x8C); // ramp DAC output to 0.5*AVCC
 			printk("DAC bias level -> STANDBY!");
 			break;
 		case SND_SOC_BIAS_PREPARE:
 			snd_soc_component_write(component, ES9038Q2M_AUTO_CAL,0x05); //Bias high, turn on opamp
 			mdelay(50);
 			snd_soc_component_write(component, ES9038Q2M_GPIO_INV, 0x00);//GPIO high, turn on pwr
-			mdelay(50);
-			snd_soc_component_write(component, ES9038Q2M_SOFT_START, 0x8C); // ramp DAC output to 0.5*AVCC
+			// mdelay(50);
+			// snd_soc_component_write(component, ES9038Q2M_SOFT_START, 0x8C); // ramp DAC output to 0.5*AVCC
 			printk("DAC bias level -> PREPARE!");
 			break;
 		case SND_SOC_BIAS_ON:
 			snd_soc_component_write(component, ES9038Q2M_AUTO_CAL,0x05); //Bias high, turn on opamp
 			snd_soc_component_write(component, ES9038Q2M_GPIO_INV, 0x00);//GPIO high, turn on pwr
-			snd_soc_component_write(component, ES9038Q2M_SOFT_START, 0x8C); // ramp DAC output to 0.5*AVCC
+			// snd_soc_component_write(component, ES9038Q2M_SOFT_START, 0x8C); // ramp DAC output to 0.5*AVCC
 			printk("DAC bias level -> ON!");
 			break;
 	}
@@ -458,7 +456,7 @@ static int hifibunny3_codec_probe(struct device *dev, struct regmap *regmap)
 	regmap_write(regmap, ES9038Q2M_DEEMP_DOP,0x48);
 	regmap_write(regmap, ES9038Q2M_GPIO_CONFIG,0xFF);
 	regmap_write(regmap, ES9038Q2M_MASTER_MODE,0xA0);
-	regmap_write(regmap, ES9038Q2M_SOFT_START,0x0C);
+	regmap_write(regmap, ES9038Q2M_SOFT_START,0x8C);
 	regmap_write(regmap, ES9038Q2M_GENERAL_CONFIG_0,0x54);
 	regmap_write(regmap, ES9038Q2M_GENERAL_CONFIG_1,0x40);
 
